@@ -3,6 +3,7 @@ import { Card, Flex, Typography, Form, Input } from "antd";
 import { Button } from "antd/es/radio";
 import { Link } from "react-router-dom";
 import LoginImage from "../assets/Login.png";
+import "./Auth.css";
 const Login = () => {
   const handleregister = (values) => {
     console.log(values);
@@ -12,7 +13,7 @@ const Login = () => {
       <Flex gap="large" align="center">
         <Flex vertical flex={1}>
           <Typography.Title level={3} strong className="title">
-            Create an account
+            Create an account hello
           </Typography.Title>
           <Typography.Text type="secondary" strong className="slogan">
             Join for exclusive access
@@ -46,7 +47,6 @@ const Login = () => {
             >
               <Input size="large" placeholder="Enter your email address" />
             </Form.Item>
-
             <Form.Item
               label="Password"
               name="password"
@@ -59,7 +59,6 @@ const Login = () => {
             >
               <Input.Password size="large" placeholder="Enter your password" />
             </Form.Item>
-
             <Form.Item>
               <Button
                 type="primary"
@@ -84,5 +83,4 @@ const Login = () => {
     </Card>
   );
 };
-
 export default Login;

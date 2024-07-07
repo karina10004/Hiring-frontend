@@ -3,6 +3,7 @@ import { Card, Flex, Typography, Form, Input } from "antd";
 import { Button } from "antd/es/radio";
 import { Link } from "react-router-dom";
 import registerImage from "../assets/register.png";
+import "./Auth.css";
 const Register = () => {
   const handleregister = (values) => {
     console.log(values);
@@ -46,7 +47,6 @@ const Register = () => {
             >
               <Input size="large" placeholder="Enter your email address" />
             </Form.Item>
-
             <Form.Item
               label="Password"
               name="password"
@@ -59,7 +59,6 @@ const Register = () => {
             >
               <Input.Password size="large" placeholder="Enter your password" />
             </Form.Item>
-
             <Form.Item
               label="Password"
               name="passwordConfirm"
@@ -101,5 +100,4 @@ const Register = () => {
     </Card>
   );
 };
-
 export default Register;
