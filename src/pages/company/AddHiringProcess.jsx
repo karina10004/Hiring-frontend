@@ -1,5 +1,4 @@
 import React from "react";
-import "./AddHiringProcess.css";
 import {
   Button,
   Cascader,
@@ -11,6 +10,8 @@ import {
   Select,
   TreeSelect,
 } from "antd";
+import "./AddHiringProcess.css";
+
 const { RangePicker } = DatePicker;
 const formItemLayout = {
   labelCol: {
@@ -30,145 +31,87 @@ const formItemLayout = {
     },
   },
 };
-const AddHiringProcess = () => (
-  <Form
-    {...formItemLayout}
-    variant="filled"
-    style={{
-      maxWidth: 600,
-    }}
-  >
-    <Form.Item
-      label="Input"
-      name="Input"
-      rules={[
-        {
-          required: true,
-          message: "Please input!",
-        },
-      ]}
-    >
-      <Input />
-    </Form.Item>
 
-    <Form.Item
-      label="InputNumber"
-      name="InputNumber"
-      rules={[
-        {
-          required: true,
-          message: "Please input!",
-        },
-      ]}
-    >
-      <InputNumber
-        style={{
-          width: "100%",
-        }}
-      />
-    </Form.Item>
+const AddHiringProcess = () => {
+  const handleSubmit = () => {
+    console.log();
+  };
 
-    <Form.Item
-      label="TextArea"
-      name="TextArea"
-      rules={[
-        {
-          required: true,
-          message: "Please input!",
-        },
-      ]}
-    >
-      <Input.TextArea />
-    </Form.Item>
+  return (
+    <div className="hiringprocess">
+      <Form {...formItemLayout} variant="filled">
+        <Form.Item
+          className="custom-form-item"
+          label="Title"
+          name="Title"
+          rules={[
+            {
+              required: true,
+              message: "Please input!",
+            },
+          ]}
+        >
+          <Input className="custom-input" />
+        </Form.Item>
 
-    <Form.Item
-      label="Mentions"
-      name="Mentions"
-      rules={[
-        {
-          required: true,
-          message: "Please input!",
-        },
-      ]}
-    >
-      <Mentions />
-    </Form.Item>
+        <Form.Item
+          className="custom-form-item"
+          label="Description"
+          name="Description"
+          rules={[
+            {
+              required: true,
+              message: "Please input!",
+            },
+          ]}
+        >
+          <Input.TextArea className="custom-textarea" />
+        </Form.Item>
 
-    <Form.Item
-      label="Select"
-      name="Select"
-      rules={[
-        {
-          required: true,
-          message: "Please input!",
-        },
-      ]}
-    >
-      <Select />
-    </Form.Item>
+        <Form.Item
+          className="custom-form-item"
+          label="Number of Rounds"
+          name="Number of Rounds"
+          rules={[
+            {
+              required: true,
+              message: "Please input!",
+            },
+          ]}
+        >
+          <InputNumber className="custom-input-number" />
+        </Form.Item>
 
-    <Form.Item
-      label="Cascader"
-      name="Cascader"
-      rules={[
-        {
-          required: true,
-          message: "Please input!",
-        },
-      ]}
-    >
-      <Cascader />
-    </Form.Item>
+        <Form.Item
+          className="custom-form-item"
+          label="Schedule"
+          name="schedule"
+          rules={[
+            {
+              required: true,
+              message: "Please input!",
+            },
+          ]}
+        >
+          <RangePicker className="custom-picker" />
+        </Form.Item>
 
-    <Form.Item
-      label="TreeSelect"
-      name="TreeSelect"
-      rules={[
-        {
-          required: true,
-          message: "Please input!",
-        },
-      ]}
-    >
-      <TreeSelect />
-    </Form.Item>
-
-    <Form.Item
-      label="DatePicker"
-      name="DatePicker"
-      rules={[
-        {
-          required: true,
-          message: "Please input!",
-        },
-      ]}
-    >
-      <DatePicker />
-    </Form.Item>
-
-    <Form.Item
-      label="RangePicker"
-      name="RangePicker"
-      rules={[
-        {
-          required: true,
-          message: "Please input!",
-        },
-      ]}
-    >
-      <RangePicker />
-    </Form.Item>
-
-    <Form.Item
-      wrapperCol={{
-        offset: 6,
-        span: 16,
-      }}
-    >
-      <Button type="primary" htmlType="submit">
-        Submit
-      </Button>
-    </Form.Item>
-  </Form>
-);
-export default AddHiringProcess;
+        <Form.Item
+          wrapperCol={{
+            offset: 6,
+            span: 16,
+          }}
+        >
+          <Button
+            type="primary"
+            htmlType="submit"
+            className="custom-button-primary"
+            onClick={handleSubmit}
+          >
+            Submit
+          </Button>
+        </Form.Item>
+      </Form>
+    </div>
+  );
+};

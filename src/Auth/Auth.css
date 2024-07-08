@@ -1,29 +1,39 @@
 * {
-    margin: 0;
-    padding: 0;
-    font-family: "Poppins", sans-serif;
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", sans-serif;
+}
+.form-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: #cbdbff;
+}
+
+.ant-form-item {
+    margin-bottom: 12px; /* Adjust the value as needed */
   }
-  .form-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    background: #cbdbff;
+
+.form-container {
+    max-width: 1000px; 
+    margin: 0 auto; 
+    max-height: 700px;
+    padding: 20px; 
   }
-  
-  .form-container {
-    width: 1000px;
-  }
-  .title,
-  .slogan {
-    text-align: center;
-  }
-  .btn {
-    width: 100%;
-    text-align: center;
-    background-color: #cbdbff;
-  }
-  .auth-image {
-    width: 100%;
-    border-radius: 8px;
-  }
+/* .form-container{
+  width: 1000px;
+} */
+.title, .slogan{
+
+  text-align: center;
+}
+.btn {
+  width: 100%;
+  text-align: center;
+  background-color: #cbdbff;
+}
+.auth-image {
+  width: 100%;
+  border-radius: 8px;
+}

@@ -1,10 +1,9 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Dashboard from "./pages/Dashboard";
+import Dashboard from "./pages/company/Dashboard";
 import Register from "./Auth/Register";
 import Login from "./Auth/Login";
-import CompanyRegister from "./Auth/CompanyRegister";
-import AddHiringProcess from "./pages/company/AddHiringProcess";
+import CandidateHome from "./pages/candidate/Home";
 
 const App = () => {
   return (
@@ -12,12 +11,8 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Register />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/companyregister" element={<CompanyRegister />} />
         <Route path="/dashboard" element={<Dashboard />} />
-        <Route
-          path="/company/add-hiring-process"
-          element={<AddHiringProcess />}
-        />
+        <Route path="/candidate" element={<CandidateHome />} />
       </Routes>
     </Router>
   );
