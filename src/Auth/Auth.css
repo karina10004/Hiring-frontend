@@ -1,18 +1,14 @@
-* {
-  margin: 0;
-  padding: 0;
-  font-family: "Poppins", sans-serif;
-}
 .form-container {
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100vh;
-  background: #cbdbff;
+  background: white;
 }
 
 .ant-form-item {
-    margin-bottom: 12px; /* Adjust the value as needed */
+    margin-bottom: 12px; 
+    background: white;
   }
 
 .form-container {
@@ -20,12 +16,12 @@
     margin: 0 auto; 
     max-height: 700px;
     padding: 20px; 
+    background: white;
   }
 /* .form-container{
   width: 1000px;
 } */
 .title, .slogan{
-
   text-align: center;
 }
 .btn {
