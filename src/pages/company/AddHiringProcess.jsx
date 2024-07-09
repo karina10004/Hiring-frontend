@@ -1,117 +1,85 @@
-import React from "react";
-import {
-  Button,
-  Cascader,
-  DatePicker,
-  Form,
-  Input,
-  InputNumber,
-  Mentions,
-  Select,
-  TreeSelect,
-} from "antd";
+import React, { useState } from "react";
+import { Form, Input, DatePicker, Select, Space } from "antd";
 import "./AddHiringProcess.css";
+const HiringProcessForm = () => {
+  const [form] = Form.useForm();
 
-const { RangePicker } = DatePicker;
-const formItemLayout = {
-  labelCol: {
-    xs: {
-      span: 24,
-    },
-    sm: {
-      span: 6,
-    },
-  },
-  wrapperCol: {
-    xs: {
-      span: 24,
-    },
-    sm: {
-      span: 14,
-    },
-  },
-};
+  const onFinish = (values) => {
+    console.log("Success:", values);
+  };
 
-const AddHiringProcess = () => {
-  const handleSubmit = () => {
-    console.log();
+  const onFinishFailed = (errorInfo) => {
+    console.log("Failed:", errorInfo);
   };
 
   return (
-    <div className="hiringprocess">
-      <Form {...formItemLayout} variant="filled">
+    <div className="container">
+      <Form
+        form={form}
+        layout="vertical"
+        name="hiringProcessForm"
+        onFinish={onFinish}
+        onFinishFailed={onFinishFailed}
+        autoComplete="off"
+        style={{ maxWidth: 600, margin: "0 auto" }}
+      >
         <Form.Item
-          className="custom-form-item"
-          label="Title"
-          name="Title"
-          rules={[
-            {
-              required: true,
-              message: "Please input!",
-            },
-          ]}
+          label="Job Title"
+          name="title"
+          rules={[{ required: true, message: "Please enter the job title" }]}
         >
-          <Input className="custom-input" />
+          <Input />
         </Form.Item>
-
         <Form.Item
-          className="custom-form-item"
           label="Description"
-          name="Description"
+          name="desc"
           rules={[
-            {
-              required: true,
-              message: "Please input!",
-            },
+            { required: true, message: "Please enter a job description" },
           ]}
         >
-          <Input.TextArea className="custom-textarea" />
+          <Input.TextArea rows={4} />
         </Form.Item>
-
         <Form.Item
-          className="custom-form-item"
           label="Number of Rounds"
-          name="Number of Rounds"
+          name="numRounds"
           rules={[
-            {
-              required: true,
-              message: "Please input!",
-            },
+            { required: true, message: "Please enter the number of rounds" },
           ]}
         >
-          <InputNumber className="custom-input-number" />
+          <Input type="number" />
+        </Form.Item>
+        <Form.Item
+          label="Start Date"
+          name="startDate"
+          rules={[{ required: true, message: "Please select a start date" }]}
+        >
+          <DatePicker />
+        </Form.Item>
+        <Form.Item
+          label="End Date"
+          name="endDate"
+          rules={[{ required: true, message: "Please select an end date" }]}
+        >
+          <DatePicker />
+        </Form.Item>
+        <Form.Item
+          label="Company"
+          name="companyId"
+          rules={[{ required: true, message: "Please select a company" }]}
+        >
+          <Select placeholder="Select Company">
+            <Select.Option value="company1">Company 1</Select.Option>
+          </Select>
         </Form.Item>
 
-        <Form.Item
-          className="custom-form-item"
-          label="Schedule"
-          name="schedule"
-          rules={[
-            {
-              required: true,
-              message: "Please input!",
-            },
-          ]}
-        >
-          <RangePicker className="custom-picker" />
-        </Form.Item>
-
-        <Form.Item
-          wrapperCol={{
-            offset: 6,
-            span: 16,
-          }}
-        >
-          <Button
-            type="primary"
-            htmlType="submit"
-            className="custom-button-primary"
-            onClick={handleSubmit}
-          >
-            Submit
-          </Button>
+        <Form.Item>
+          <button type="primary" htmlType="submit">
+            Create Hiring Process
+          </button>
         </Form.Item>
       </Form>
     </div>
   );
 };
+
+export default HiringProcessForm;

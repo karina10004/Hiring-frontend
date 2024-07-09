@@ -1,10 +1,17 @@
-import React from "react";
-import { Card, Flex, Typography, Form, Input } from "antd";
-import { Button } from "antd/es/radio";
-import { Link } from "react-router-dom";
-import { Upload } from "antd";
+import React, { useState } from "react";
+import {
+  Card,
+  Flex,
+  Typography,
+  Form,
+  Input,
+  Button,
+  Upload,
+  message,
+} from "antd";
 import { UploadOutlined } from "@ant-design/icons";
-//import { Upload } from 'antd';
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 import "./Auth.css";
 import LoginImage from "../assets/Login.png";
 
@@ -27,8 +34,47 @@ const props = {
 };
 
 const CompanyRegister = () => {
-  const handleregister = (values) => {
-    console.log(values);
+  const [formData, setFormData] = useState({
+    name: "",
+    desc: "",
+    username: "",
+    password: "",
+    location: "",
+  });
+  const navigate = useNavigate();
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleregister = async () => {
+    try {
+      const data = {
+        name: formData.name,
+        desc: formData.desc,
+        username: formData.username,
+        password: formData.password,
+        location: formData.location,
+        logoUrl: "www.example.com/png",
+      };
+
+      // const response = await axios.post(
+      //   "http://localhost:8000/api/company/register",
+      //   data,
+      //   {
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //     },
+      //   }
+      // );
+
+      // message.success(response.data.message);
+      navigate("/companylogin");
+    } catch (error) {
+      console.log(error);
+      message.error("Registration failed");
+    }
   };
   return (
     <Card size="medium" className="form-container">
@@ -37,30 +83,42 @@ const CompanyRegister = () => {
           <Typography.Title level={3} strong className="title">
             Register Company
           </Typography.Title>
-          <Form layout="vertical" onFinish={handleregister} autoComplete="off">
+          <Form layout="vertical" autoComplete="off">
             <Form.Item
               label="Name"
               name="name"
               rules={[
                 {
                   required: true,
-                  message: "please input your full name",
+                  message: "Please input your full name",
                 },
               ]}
             >
-              <Input size="large" placeholder="Enter your name" />
+              <Input
+                size="large"
+                placeholder="Enter your name"
+                name="name"
+                value={formData.name}
+                onChange={handleInputChange}
+              />
             </Form.Item>
             <Form.Item
-              label="description"
+              label="Description"
               name="desc"
               rules={[
                 {
                   required: true,
-                  message: "please input your description",
+                  message: "Please input your description",
                 },
               ]}
             >
-              <Input size="large" placeholder="Enter your description" />
+              <Input
+                size="large"
+                placeholder="Enter your description"
+                name="desc"
+                value={formData.desc}
+                onChange={handleInputChange}
+              />
             </Form.Item>
             <Form.Item
               label="Username"
@@ -68,14 +126,17 @@ const CompanyRegister = () => {
               rules={[
                 {
                   required: true,
-                  message: "please input your username",
-                },
-                {
-                  type: "string",
+                  message: "Please input your username",
                 },
               ]}
             >
-              <Input size="large" placeholder="Enter your usename" />
+              <Input
+                size="large"
+                placeholder="Enter your username"
+                name="username"
+                value={formData.username}
+                onChange={handleInputChange}
+              />
             </Form.Item>
             <Form.Item
               label="Password"
@@ -83,23 +144,35 @@ const CompanyRegister = () => {
               rules={[
                 {
                   required: true,
-                  message: "please input your Password",
+                  message: "Please input your Password",
                 },
               ]}
             >
-              <Input.Password size="large" placeholder="Enter your password" />
+              <Input.Password
+                size="large"
+                placeholder="Enter your password"
+                name="password"
+                value={formData.password}
+                onChange={handleInputChange}
+              />
             </Form.Item>
             <Form.Item
-              label="location"
+              label="Location"
               name="location"
               rules={[
                 {
                   required: true,
-                  message: "please input your location",
+                  message: "Please input your location",
                 },
               ]}
             >
-              <Input size="large" placeholder="Enter your location" />
+              <Input
+                size="large"
+                placeholder="Enter your location"
+                name="location"
+                value={formData.location}
+                onChange={handleInputChange}
+              />
             </Form.Item>
             <Form.Item
               label="Logo"
@@ -114,25 +187,27 @@ const CompanyRegister = () => {
             <Form.Item>
               <Button
                 type="primary"
-                htmlType="submit"
+                htmlType="button"
                 size="large"
                 className="btn"
+                onClick={handleregister}
               >
-                Sign in
+                Create Account
               </Button>
             </Form.Item>
             <Form.Item>
-              <Link to="/">
-                <Button className="btn">Create a Account</Button>
+              <Link to="/companylogin">
+                <Button className="btn">Sign in</Button>
               </Link>
             </Form.Item>
           </Form>
         </Flex>
         <Flex flex={1}>
-          <img src={LoginImage} className="auth-image" />
+          <img src={LoginImage} className="auth-image" alt="Login" />
         </Flex>
       </Flex>
     </Card>
   );
 };
+
 export default CompanyRegister;
