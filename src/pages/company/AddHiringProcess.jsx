@@ -13,7 +13,7 @@ const HiringProcessForm = () => {
   };
 
   return (
-    <div className="container">
+    <div className="form-container">
       <Form
         form={form}
         layout="vertical"
@@ -22,6 +22,7 @@ const HiringProcessForm = () => {
         onFinishFailed={onFinishFailed}
         autoComplete="off"
         style={{ maxWidth: 600, margin: "0 auto" }}
+        className="form1"
       >
         <Form.Item
           label="Job Title"
