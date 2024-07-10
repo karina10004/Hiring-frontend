@@ -1,12 +1,60 @@
-import React from "react";
-import { Card, Flex, Typography, Form, Input } from "antd";
-import { Button } from "antd/es/radio";
+import React, { useState } from "react";
+
+import { Card, Typography, Form, Input, Button, message } from "antd";
+
+import axios from "axios";
+
 import "./AddEmployee.css";
+
 const AddEmployee = () => {
+  const [formData, setFormData] = useState({
+    name: "",
+
+    position: "",
+
+    email: "",
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleadd = async () => {
+    try {
+      const data = {
+        name: formData.name,
+
+        position: formData.position,
+
+        email: formData.email,
+      };
+
+      const response = await axios.post(
+        "http://localhost:8000/api/companyemployee",
+
+        data,
+
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      message.success(response.data.message);
+    } catch (error) {
+      console.log(error);
+
+      message.error("Add Employee Failed");
+    }
+  };
+
   return (
     <Card className="form-container">
-      <Flex gap="large" align="center">
-        <Flex vertical flex={1}>
+      <div className="flex-container">
+        <div className="flex-vertical">
           <Typography.Title level={3} strong className="title">
             Add Employee
           </Typography.Title>
@@ -21,7 +69,13 @@ const AddEmployee = () => {
                 },
               ]}
             >
-              <Input size="large" placeholder="Enter your full name" />
+              <Input
+                size="large"
+                placeholder="Enter your full name"
+                name="name"
+                value={formData.name}
+                onChange={handleInputChange}
+              />
             </Form.Item>
 
             <Form.Item
@@ -34,22 +88,17 @@ const AddEmployee = () => {
                 },
               ]}
             >
-              <Input size="large" placeholder="Enter position of employee" />
+              <Input
+                size="large"
+                placeholder="Enter position of employee"
+                name="position"
+                value={formData.position}
+                onChange={handleInputChange}
+              />
             </Form.Item>
+
             <Form.Item
-              label="CandidateId"
-              name="CandidateId"
-              rules={[
-                {
-                  required: true,
-                  message: "please input position",
-                },
-              ]}
-            >
-              <Input size="large" placeholder="Please Enter the CandidateId" />
-            </Form.Item>
-            <Form.Item
-              label="email"
+              label="Email"
               name="email"
               rules={[
                 {
@@ -58,7 +107,13 @@ const AddEmployee = () => {
                 },
               ]}
             >
-              <Input size="large" placeholder="Enter email address" />
+              <Input
+                size="large"
+                placeholder="Enter email address"
+                name="email"
+                value={formData.email}
+                onChange={handleInputChange}
+              />
             </Form.Item>
 
             <Form.Item>
@@ -67,13 +122,14 @@ const AddEmployee = () => {
                 htmlType="submit"
                 size="large"
                 className="btn"
+                onClick={handleadd}
               >
                 Add Employee
               </Button>
             </Form.Item>
           </Form>
-        </Flex>
-      </Flex>
+        </div>
+      </div>
     </Card>
   );
 };

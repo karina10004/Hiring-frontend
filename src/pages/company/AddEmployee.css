@@ -1,35 +1,31 @@
 .form-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 70vh;
-    margin-top: 50px;
-    max-width: 600px;
-    margin: 0 auto;
-    max-height: 700px;
-    padding: 20px;
-    background: white;
-    margin-top: 10%;
-  }
-  
-  .ant-form-item {
-    margin-bottom: 12px;
-    background: white;
-    width: 100%;
-  }
-  
-  .title,
-  .slogan {
-    text-align: center;
-  }
-  
-  .btn {
-    width: 100%;
-    text-align: center;
-    background-color: #cbdbff;
-  }
-  
-  .auth-image {
-    width: 100%;
-    border-radius: 8px;
-  }
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 70vh;
+  margin-top: 50px;
+  max-width: 600px;
+  margin: 0 auto;
+  max-height: 700px;
+  padding: 20px;
+  background: white;
+  margin-top: 10%;
+}
+.ant-form-item {
+  margin-bottom: 12px;
+  background: white;
+  width: 100%;
+}
+.title,
+.slogan {
+  text-align: center;
+}
+.btn {
+  width: 100%;
+  text-align: center;
+  background-color: #cbdbff;
+}
+.auth-image {
+  width: 100%;
+  border-radius: 8px;
+}

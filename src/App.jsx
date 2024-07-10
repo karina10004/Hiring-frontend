@@ -8,7 +8,7 @@ import CompanyRegister from "./Auth/CompanyRegister";
 import CompanyLogin from "./Auth/CompanyLogin";
 import AddHiring from "./pages/company/AddHiringProcess";
 import AddEmployee from "./pages/company/AddEmployee";
-
+import ManageHiringProcess from "./pages/company/ManageHiringProcess";
 const App = () => {
   return (
     <Router>
@@ -21,8 +21,10 @@ const App = () => {
         <Route path="/companyregister" element={<CompanyRegister />} />
         <Route path="/hiring" element={<AddHiring />} />
         <Route path="/employee" element={<AddEmployee />} />
+        <Route path="/manage/:id" element={<ManageHiringProcess />} />
       </Routes>
     </Router>
   );
 };
+
 export default App;

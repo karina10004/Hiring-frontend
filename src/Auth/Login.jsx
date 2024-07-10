@@ -5,19 +5,16 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import LoginImage from "../assets/Login.png";
 import "./Auth.css";
-
 const Login = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
   const navigate = useNavigate();
-
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-
   const handleLogin = async () => {
     try {
       const response = await axios.post(
@@ -29,7 +26,6 @@ const Login = () => {
           },
         }
       );
-
       message.success(response.data.message);
       navigate("/candidate");
     } catch (error) {
@@ -37,7 +33,6 @@ const Login = () => {
       message.error(error.response?.data?.msg || "Login failed");
     }
   };
-
   return (
     <Card className="form-container">
       <Flex gap="large" align="center">
@@ -92,7 +87,7 @@ const Login = () => {
             <Form.Item>
               <Button
                 type="primary"
-                htmlType="button" // Use type="button" to prevent form submission
+                htmlType="button"
                 size="large"
                 className="btn"
                 onClick={handleLogin}

@@ -14,7 +14,6 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./Auth.css";
 import LoginImage from "../assets/Login.png";
-
 const props = {
   name: "file",
   action: "https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload",
@@ -32,7 +31,6 @@ const props = {
     }
   },
 };
-
 const CompanyRegister = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -42,12 +40,10 @@ const CompanyRegister = () => {
     location: "",
   });
   const navigate = useNavigate();
-
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-
   const handleregister = async () => {
     try {
       const data = {
@@ -59,17 +55,17 @@ const CompanyRegister = () => {
         logoUrl: "www.example.com/png",
       };
 
-      // const response = await axios.post(
-      //   "http://localhost:8000/api/company/register",
-      //   data,
-      //   {
-      //     headers: {
-      //       "Content-Type": "application/json",
-      //     },
-      //   }
-      // );
+      const response = await axios.post(
+        "http://localhost:8000/api/company/register",
+        data,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
-      // message.success(response.data.message);
+      message.success(response.data.message);
       navigate("/companylogin");
     } catch (error) {
       console.log(error);
@@ -183,7 +179,6 @@ const CompanyRegister = () => {
                 <Button icon={<UploadOutlined />}>Upload logo</Button>
               </Upload>
             </Form.Item>
-
             <Form.Item>
               <Button
                 type="primary"
@@ -209,5 +204,4 @@ const CompanyRegister = () => {
     </Card>
   );
 };
-
 export default CompanyRegister;

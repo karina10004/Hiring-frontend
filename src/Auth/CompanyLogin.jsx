@@ -4,26 +4,22 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./Auth.css";
 import LoginImage from "../assets/Login.png";
-
 const CompanyLogin = () => {
   const [formData, setFormData] = useState({
     username: "",
     password: "",
   });
   const navigate = useNavigate();
-
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-
   const handleLogin = async () => {
     try {
       const data = {
         username: formData.username,
         password: formData.password,
       };
-
       const response = await axios.post(
         "http://localhost:8000/api/company/login",
         data,
@@ -34,12 +30,13 @@ const CompanyLogin = () => {
         }
       );
 
+      localStorage.setItem("access_token", response.data.access_token);
+
       navigate("/dashboard");
     } catch (error) {
       console.error("Login error:", error);
     }
   };
-
   return (
     <Card className="form-container">
       <Flex gap="large" align="center">

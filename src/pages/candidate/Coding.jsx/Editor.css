@@ -1,0 +1,41 @@
+.layout {
+    min-height: 100vh;
+  }
+
+  .logo {
+    width: 120px;
+    height: 31px;
+    background: rgba(255, 255, 255, 0.2);
+    margin: 16px 28px 16px 0;
+    float: left;
+  }
+
+  .site-layout-content {
+    background: #fff;
+    padding: 24px;
+    min-height: 280px;
+  }
+
+  .dark-theme .site-layout-content {
+    background: #1f1f1f;
+    color: #fff;
+  }
+
+  .light-theme .site-layout-content {
+    background: #fff;
+    color: #000;
+  }
+
+  .question-panel {
+    padding: 24px;
+  }
+
+  .dark-theme .question-panel {
+    background: #333;
+    color: #fff;
+  }
+
+  .light-theme .question-panel {
+    background: #f0f2f5;
+    color: #000;
+  }
