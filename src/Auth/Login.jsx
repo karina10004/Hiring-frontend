@@ -26,7 +26,19 @@ const Login = () => {
           },
         }
       );
+
       message.success(response.data.message);
+
+      const registrationToken = localStorage.getItem("registrationToken");
+      if (registrationToken) {
+        const candidateId = response.data._id;
+        const registerResponse = await axios.post(
+          `http://localhost:8000/api/register/${registrationToken}/${candidateId}`
+        );
+        console.log("Registration response:", registerResponse.data);
+        localStorage.removeItem("registrationToken");
+      }
+
       navigate("/candidate");
     } catch (error) {
       console.error("Login failed:", error);

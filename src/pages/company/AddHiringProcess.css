@@ -11,12 +11,10 @@
   background: white;
   /* margin-top: 10%; */
 }
-
 .ant-form-item {
   margin-bottom: 12px;
   background: white;
 }
-
 .form-container {
   max-width: 1000px;
   margin: 0 auto;
@@ -40,7 +38,7 @@
   width: 100%;
   border-radius: 8px;
 }
-
+/* 
 body {
   background-color: #cbdbff;
-}
+} */

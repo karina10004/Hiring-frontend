@@ -1,0 +1,34 @@
+.layout {
+    min-height: 100vh;
+  }
+
+  .logo {
+    width: 120px;
+    height: 31px;
+    background: rgba(255, 255, 255, 0.2);
+    margin: 16px 24px 16px 0;
+    float: left;
+  }
+
+  .site-layout-content {
+    background: #fff;
+    padding: 24px;
+    margin: 24px 0;
+  }
+
+  .site-layout-content > .ant-typography {
+    margin-bottom: 24px;
+  }
+
+  .site-layout-content .ant-list-item-meta-title a {
+    font-size: 18px;
+  }
+
+  .site-layout-content .ant-list-item-meta-description {
+    font-size: 16px;
+    color: #666;
+  }
+
+  .ant-list-item-extra a {
+    color: #1890ff;
+  }

@@ -14,9 +14,7 @@ import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 import Sidebar from "./companydashboard/Dashboard";
 import { useParams } from "react-router-dom";
-
 const { Header, Sider, Content } = Layout;
-
 const ManageHiringProcess = () => {
   const { id } = useParams();
   const [collapsed, setCollapsed] = useState(false);
@@ -33,7 +31,6 @@ const ManageHiringProcess = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [modalType, setModalType] = useState("");
   const [modalForm] = Form.useForm();
-
   const fetchHiringProcess = async () => {
     try {
       const access_token = localStorage.getItem("access_token");
@@ -55,7 +52,6 @@ const ManageHiringProcess = () => {
         startDate: hiringData.startDate,
         endDate: hiringData.endDate,
       });
-
       const codingRoundDetails = await Promise.all(
         hiringData.codingRounds.map(async (roundId) => {
           const roundResponse = await axios.get(
@@ -69,7 +65,6 @@ const ManageHiringProcess = () => {
           return roundResponse.data;
         })
       );
-
       const interviewRoundDetails = await Promise.all(
         hiringData.interviewRounds.map(async (roundId) => {
           const roundResponse = await axios.get(
@@ -83,7 +78,6 @@ const ManageHiringProcess = () => {
           return roundResponse.data;
         })
       );
-
       setCodingRounds(codingRoundDetails);
       setInterviewRounds(interviewRoundDetails);
     } catch (error) {
@@ -91,27 +85,23 @@ const ManageHiringProcess = () => {
       message.error("Failed to fetch hiring process");
     }
   };
-
   useEffect(() => {
     fetchHiringProcess();
   }, [id]);
-
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-
   const handleDateChange = (name, date) => {
     setFormData({ ...formData, [name]: date });
   };
-
   const handleUpdate = async () => {
     try {
       const access_token = localStorage.getItem("access_token");
       const companyId = jwtDecode(access_token).id;
       await axios.put(
         `http://localhost:8000/api/hiring/update/${companyId}/${id}`,
-        formData,
+        { ...formData, registrationLink: hiringProcess.registrationLink },
         {
           headers: {
             "Content-Type": "application/json",
@@ -125,18 +115,15 @@ const ManageHiringProcess = () => {
       message.error("Failed to update hiring process");
     }
   };
-
   const showModal = (type) => {
     setModalType(type);
     setIsModalVisible(true);
   };
-
   const handleModalOk = async () => {
     try {
       const values = await modalForm.validateFields();
       const access_token = localStorage.getItem("access_token");
       const companyId = jwtDecode(access_token).id;
-
       if (modalType === "coding") {
         await axios.post(
           `http://localhost:8000/api/codinground/create/${id}`,
@@ -162,10 +149,8 @@ const ManageHiringProcess = () => {
         );
         message.success("Interview round added successfully!");
       }
-
       // Refetch the hiring process to update the round lists
       await fetchHiringProcess();
-
       setIsModalVisible(false);
       modalForm.resetFields();
     } catch (error) {
@@ -173,12 +158,10 @@ const ManageHiringProcess = () => {
       message.error("Failed to add round");
     }
   };
-
   const handleModalCancel = () => {
     setIsModalVisible(false);
     modalForm.resetFields();
   };
-
   const codingRoundColumns = [
     {
       title: "Number of Questions",
@@ -201,7 +184,6 @@ const ManageHiringProcess = () => {
       key: "endTime",
     },
   ];
-
   const interviewRoundColumns = [
     {
       title: "Start Date",
@@ -224,7 +206,6 @@ const ManageHiringProcess = () => {
       key: "type",
     },
   ];
-
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <Sider
@@ -363,7 +344,6 @@ const ManageHiringProcess = () => {
           </div>
         </Content>
       </Layout>
-
       <Modal
         title={`Add ${modalType === "coding" ? "Coding" : "Interview"} Round`}
         visible={isModalVisible}
@@ -456,5 +436,4 @@ const ManageHiringProcess = () => {
     </Layout>
   );
 };
-
 export default ManageHiringProcess;

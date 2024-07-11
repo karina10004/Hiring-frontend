@@ -4,24 +4,30 @@ import {
   Menu,
   Breadcrumb,
   Card,
-  Input,
   Button,
   Row,
   Col,
   Typography,
   Select,
   Switch,
+  Collapse,
 } from "antd";
+import MonacoEditor from "react-monaco-editor";
 import "./Editor.css";
 
 const { Header, Content, Footer, Sider } = Layout;
-const { TextArea } = Input;
-const { Title } = Typography;
+const { Title, Text } = Typography;
 const { Option } = Select;
+const { Panel } = Collapse;
 
 const dummyQuestion = {
   title: "Example Question",
   description: "Write a function that returns the sum of two numbers.",
+  testCases: [
+    { input: "1, 2", output: "3" },
+    { input: "5, 7", output: "12" },
+    { input: "-3, 10", output: "7" },
+  ],
 };
 
 const CodeEditor = () => {
@@ -32,7 +38,6 @@ const CodeEditor = () => {
 
   const handleRunCode = () => {
     try {
-      // For demo purposes, we're only evaluating JavaScript code
       if (language === "javascript") {
         const result = eval(code);
         setOutput(result.toString());
@@ -49,20 +54,19 @@ const CodeEditor = () => {
     setOutput("");
   };
 
-  const handleCodeChange = (e) => {
-    setCode(e.target.value);
+  const handleCodeChange = (newCode) => {
+    setCode(newCode);
   };
 
   const handleLanguageChange = (value) => {
     setLanguage(value);
   };
-
   const handleThemeChange = (checked) => {
     setDarkTheme(checked);
   };
 
   return (
-    <Layout className={`layout ${darkTheme ? "dark-theme" : "light-theme"}`}>
+    <Layout className="layout" style={{ background: "#fff" }}>
       <Header>
         <div className="logo" />
         <Menu theme="dark" mode="horizontal" defaultSelectedKeys={["2"]}>
@@ -74,7 +78,17 @@ const CodeEditor = () => {
         <Sider width={300} className="site-layout-background">
           <div className="question-panel">
             <Title level={4}>{dummyQuestion.title}</Title>
-            <p>{dummyQuestion.description}</p>
+            <Text>{dummyQuestion.description}</Text>
+            <Collapse style={{ marginTop: 16 }}>
+              <Panel header="Test Cases" key="1">
+                {dummyQuestion.testCases.map((testCase, index) => (
+                  <Card key={index} style={{ marginBottom: 10 }}>
+                    <Text strong>Input:</Text> {testCase.input} <br />
+                    <Text strong>Expected Output:</Text> {testCase.output}
+                  </Card>
+                ))}
+              </Panel>
+            </Collapse>
           </div>
         </Sider>
         <Layout style={{ padding: "0 24px 24px" }}>
@@ -101,6 +115,7 @@ const CodeEditor = () => {
                     <Option value="javascript">JavaScript</Option>
                     <Option value="python">Python</Option>
                     <Option value="java">Java</Option>
+                    <Option value="cpp">C++</Option>
                   </Select>
                   <Switch
                     checked={darkTheme}
@@ -111,11 +126,16 @@ const CodeEditor = () => {
                   />
                 </Col>
                 <Col span={24}>
-                  <TextArea
-                    rows={10}
+                  <MonacoEditor
+                    width="100%"
+                    height="400px"
+                    language={language}
+                    theme={darkTheme ? "vs-dark" : "vs-light"}
                     value={code}
+                    options={{
+                      selectOnLineNumbers: true,
+                    }}
                     onChange={handleCodeChange}
-                    placeholder="Write your code here..."
                   />
                 </Col>
                 <Col span={24}>
@@ -145,5 +165,4 @@ const CodeEditor = () => {
     </Layout>
   );
 };
-
 export default CodeEditor;
