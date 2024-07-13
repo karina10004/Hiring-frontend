@@ -24,6 +24,22 @@
 .site-layout-background {
   background: #f0f2f5;
 }
-.ant-layout-sider-children{
+.ant-layout-sider-children {
   background-color: #fff;
+}
+
+.editor-container {
+  display: flex;
+  flex: 1;
+  height: 100%;
+}
+.editor-controls {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.editor-actions {
+  margin-top: 10px;
+  display: flex;
+  justify-content: flex-end;
 }

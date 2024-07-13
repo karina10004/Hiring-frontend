@@ -3,11 +3,10 @@ import { Card, Typography, Form, Input, Button, message, Layout } from "antd";
 import axios from "axios";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import { jwtDecode } from "jwt-decode";
-import Sidebar from "./companydashboard/Dashboard"; // Adjust the import path as needed
+import Sidebar from "./companydashboard/Dashboard";
 import "./AddEmployee.css";
 
 const { Header, Sider, Content } = Layout;
-
 const AddEmployee = () => {
   const [collapsed, setCollapsed] = useState(false);
   const [formData, setFormData] = useState({
@@ -19,7 +18,6 @@ const AddEmployee = () => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-
   const handleAdd = async () => {
     try {
       const data = {
@@ -50,7 +48,6 @@ const AddEmployee = () => {
       message.error("Add Employee Failed");
     }
   };
-
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <Sider
@@ -97,7 +94,6 @@ const AddEmployee = () => {
                       onChange={handleInputChange}
                     />
                   </Form.Item>
-
                   <Form.Item
                     label="Position"
                     name="position"
@@ -134,7 +130,6 @@ const AddEmployee = () => {
                       onChange={handleInputChange}
                     />
                   </Form.Item>
-
                   <Form.Item>
                     <Button
                       type="primary"
@@ -155,5 +150,4 @@ const AddEmployee = () => {
     </Layout>
   );
 };
-
 export default AddEmployee;

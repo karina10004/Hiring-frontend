@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Layout,
   Menu,
@@ -11,60 +11,194 @@ import {
   Select,
   Switch,
   Collapse,
+  message,
+  Divider,
+  Input,
+  List,
 } from "antd";
 import MonacoEditor from "react-monaco-editor";
+import axios from "axios";
+import { jwtDecode } from "jwt-decode";
+import { useNavigate, useParams } from "react-router-dom";
 import "./Editor.css";
-
+import { runCodeOnJudge0, submitCodeToJudge0 } from "./submission";
 const { Header, Content, Footer, Sider } = Layout;
-const { Title, Text } = Typography;
+const { Title, Text, Paragraph } = Typography;
 const { Option } = Select;
 const { Panel } = Collapse;
-
-const dummyQuestion = {
-  title: "Example Question",
-  description: "Write a function that returns the sum of two numbers.",
-  testCases: [
-    { input: "1, 2", output: "3" },
-    { input: "5, 7", output: "12" },
-    { input: "-3, 10", output: "7" },
-  ],
-};
-
 const CodeEditor = () => {
   const [code, setCode] = useState("");
   const [output, setOutput] = useState("");
-  const [language, setLanguage] = useState("javascript");
+  const [language, setLanguage] = useState("c++");
   const [darkTheme, setDarkTheme] = useState(false);
-
-  const handleRunCode = () => {
+  const [question, setQuestion] = useState(null);
+  const [outputs, setOutputs] = useState([]);
+  const [compileOutput, setCompileOutput] = useState("");
+  const [loading, setLoading] = useState(false);
+  const { id } = useParams();
+  const [userId, setUserId] = useState("");
+  const navigate = useNavigate();
+  const languageIds = {
+    python: 71,
+    cpp: 54,
+    java: 91,
+  };
+  const createUpdateSubmission = async (score, testCasesPassed, result) => {
     try {
-      if (language === "javascript") {
-        const result = eval(code);
-        setOutput(result.toString());
-      } else {
-        setOutput("Language execution not implemented.");
+      const response = await axios.post(
+        "http://localhost:8000/api/submission/create",
+        {
+          userId: userId,
+          questionId: id,
+          code,
+          language,
+          result,
+          testCasesPassed,
+          totalTestCases: question.testcases.length,
+          score,
+        }
+      );
+      message.success("Submission saved");
+      console.log("Submission created:", response.data);
+    } catch (error) {
+      console.error("Failed to create submission:", error);
+      message.error("Failed to run code.");
+    }
+  };
+  useEffect(() => {
+    const access_token = localStorage.getItem("access_token");
+    const type = jwtDecode(access_token).type;
+    const userid = jwtDecode(access_token).id;
+    if (type != "candidate") {
+      message.warning("You need to be a candidate to access this page");
+      navigate("/login");
+    }
+    if (!userid) {
+      message.warning("You need to be a login to access this page");
+      navigate("/login");
+    }
+    setUserId(jwtDecode(access_token).id);
+
+    const fetchQuestion = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:8000/api/question/get/${id}`
+        );
+        setQuestion(response.data);
+      } catch (error) {
+        // message.error("Failed to fetch question data.");
+        console.error("Error fetching question data:", error);
       }
+    };
+    fetchQuestion();
+  }, [id]); // Re-fetch the question if the ID changes
+
+  const handleRunCode = async () => {
+    try {
+      const results = await runCodeOnJudge0(
+        code,
+        languageIds[language],
+        question.testcases,
+        question.score
+      );
+      // const results = {
+      //   results: [
+      //     {
+      //       stdout: "as",
+      //       status: {
+      //         id: 3,
+      //         description: "Accepted",
+      //       },
+      //       compile_output: null,
+      //       id: "667aab054b8541a3dec8b82c",
+      //     },
+      //     {
+      //       stdout: "as",
+      //       status: {
+      //         id: 4,
+      //         description: "Wrong Answer",
+      //       },
+      //       compile_output: null,
+      //       id: "667aab054b8541a3dec8b82d",
+      //     },
+      //   ],
+      //   score: 0,
+      //   testCasesPassed: 1,
+      // };
+      console.log(results);
+      createUpdateSubmission(results.score, results.testCasesPassed, "pass");
+      handleResponse(results.results);
     } catch (error) {
       setOutput(error.toString());
     }
   };
 
+  const handleSubmitCode = async () => {
+    const results = await submitCodeToJudge0(
+      code,
+      languageIds[language],
+      question.testcases,
+      question.score
+    );
+    // const results = {
+    //   results: [
+    //     {
+    //       stdout: "as",
+    //       status: {
+    //         id: 3,
+    //         description: "Accepted",
+    //       },
+    //       compile_output: null,
+    //       id: "667aab054b8541a3dec8b82c",
+    //     },
+    //     {
+    //       stdout: "as",
+    //       status: {
+    //         id: 4,
+    //         description: "Wrong Answer",
+    //       },
+    //       compile_output: null,
+    //       id: "667aab054b8541a3dec8b82d",
+    //     },
+    //   ],
+    //   score: 0,
+    //   testCasesPassed: 1,
+    // };
+    console.log(results);
+    handleResponse(results.results);
+    createUpdateSubmission(results.score, results.testCasesPassed, "pass");
+    message.success("Code submitted successfully!");
+  };
   const handleClearEditor = () => {
     setCode("");
     setOutput("");
   };
-
   const handleCodeChange = (newCode) => {
     setCode(newCode);
   };
-
   const handleLanguageChange = (value) => {
     setLanguage(value);
   };
   const handleThemeChange = (checked) => {
     setDarkTheme(checked);
   };
-
+  const handleResponse = (responses) => {
+    const outputData = responses.map((response) => ({
+      id: response.id,
+      stdout: response.stdout,
+      status: response.status.description,
+      compile_output: response.compile_output || "",
+    }));
+    setOutputs(outputData);
+    const hasCompileError = responses.some(
+      (response) => response.status.id !== 3
+    );
+    if (hasCompileError) {
+      setCompileOutput("Compilation Error: Please check your code.");
+    } else {
+      setCompileOutput("");
+    }
+  };
   return (
     <Layout className="layout" style={{ background: "#fff" }}>
       <Header>
@@ -77,18 +211,66 @@ const CodeEditor = () => {
       <Layout>
         <Sider width={300} className="site-layout-background">
           <div className="question-panel">
-            <Title level={4}>{dummyQuestion.title}</Title>
-            <Text>{dummyQuestion.description}</Text>
-            <Collapse style={{ marginTop: 16 }}>
-              <Panel header="Test Cases" key="1">
-                {dummyQuestion.testCases.map((testCase, index) => (
-                  <Card key={index} style={{ marginBottom: 10 }}>
-                    <Text strong>Input:</Text> {testCase.input} <br />
-                    <Text strong>Expected Output:</Text> {testCase.output}
-                  </Card>
-                ))}
-              </Panel>
-            </Collapse>
+            {question ? (
+              <>
+                <Title level={4}>{question.title}</Title>
+                <Paragraph>
+                  <Text strong>Description:</Text>
+                  <br />
+                  {question.desc}
+                </Paragraph>
+                <Divider />
+                <Paragraph>
+                  <Text strong>Constraints:</Text>
+                  <br />
+                  {question.constraints}
+                </Paragraph>
+                <Divider />
+                <Paragraph>
+                  <Text strong>Example:</Text>
+                  <br />
+                  {question.example}
+                </Paragraph>
+                <Divider />
+                <Paragraph>
+                  <Text strong>Languages Supported:</Text>
+                  <br />
+                  {question.languages.join(", ")}
+                </Paragraph>
+                <Divider />
+                <Paragraph>
+                  <Text strong>Time Limit:</Text>
+                  <br />
+                  {question.timeLimit} ms
+                </Paragraph>
+                <Divider />
+                <Paragraph>
+                  <Text strong>Memory Limit:</Text>
+                  <br />
+                  {question.memoryLimit} KB
+                </Paragraph>
+                <Divider />
+                <Collapse style={{ marginTop: 16 }}>
+                  <Panel header="Test Cases" key="1">
+                    {question.testcases.map(
+                      (testCase, index) =>
+                        !testCase.isHidden && (
+                          <Card key={index} style={{ marginBottom: 10 }}>
+                            <Text strong>Input:</Text> {testCase.input} <br />
+                            <Text strong>Expected Output:</Text>{" "}
+                            {testCase.expectedOutput} <br />
+                            {testCase.isHidden && (
+                              <Text type="secondary">(Hidden Test Case)</Text>
+                            )}
+                          </Card>
+                        )
+                    )}
+                  </Panel>
+                </Collapse>
+              </>
+            ) : (
+              <Text>Loading question...</Text>
+            )}
           </div>
         </Sider>
         <Layout style={{ padding: "0 24px 24px" }}>
@@ -107,28 +289,40 @@ const CodeEditor = () => {
             <Card title="Code Editor">
               <Row gutter={[16, 16]}>
                 <Col span={24}>
-                  <Select
-                    defaultValue="javascript"
-                    style={{ width: 120, marginRight: 10 }}
-                    onChange={handleLanguageChange}
-                  >
-                    <Option value="javascript">JavaScript</Option>
-                    <Option value="python">Python</Option>
-                    <Option value="java">Java</Option>
-                    <Option value="cpp">C++</Option>
-                  </Select>
-                  <Switch
-                    checked={darkTheme}
-                    onChange={handleThemeChange}
-                    checkedChildren="Dark"
-                    unCheckedChildren="Light"
+                  <Row
+                    justify="space-between"
+                    align="middle"
                     style={{ marginBottom: 20 }}
-                  />
-                </Col>
-                <Col span={24}>
+                  >
+                    <Col>
+                      <Select
+                        placeholder="Select Language"
+                        style={{ width: 120, marginRight: 10 }}
+                        onChange={handleLanguageChange}
+                      >
+                        <Option value="python">Python</Option>
+                        <Option value="java">Java</Option>
+                        <Option value="cpp">C++</Option>
+                      </Select>
+                    </Col>
+                    <Col>
+                      <Button
+                        onClick={handleClearEditor}
+                        style={{ marginRight: 10 }}
+                      >
+                        Clear Editor
+                      </Button>
+                      <Switch
+                        checked={darkTheme}
+                        onChange={handleThemeChange}
+                        checkedChildren="Dark"
+                        unCheckedChildren="Light"
+                      />
+                    </Col>
+                  </Row>
                   <MonacoEditor
                     width="100%"
-                    height="400px"
+                    height="600px"
                     language={language}
                     theme={darkTheme ? "vs-dark" : "vs-light"}
                     value={code}
@@ -138,21 +332,50 @@ const CodeEditor = () => {
                     onChange={handleCodeChange}
                   />
                 </Col>
-                <Col span={24}>
-                  <Button
-                    type="primary"
-                    onClick={handleRunCode}
-                    style={{ marginRight: "10px" }}
-                  >
-                    Run Code
-                  </Button>
-                  <Button onClick={handleClearEditor}>Clear Editor</Button>
+                <Col span={24} style={{ marginTop: 20 }}>
+                  <Row justify="space-between" align="middle">
+                    <Col>
+                      <Button
+                        type="primary"
+                        onClick={handleRunCode}
+                        style={{ marginRight: "10px" }}
+                      >
+                        Run Code
+                      </Button>
+                      <Button type="primary" onClick={handleSubmitCode}>
+                        Submit Code
+                      </Button>
+                    </Col>
+                  </Row>
                 </Col>
                 <Col span={24}>
                   <Title level={4}>Output</Title>
-                  <Card>
-                    <pre>{output}</pre>
-                  </Card>
+                  <div style={{ marginTop: "20px" }}>
+                    {outputs.length > 0 &&
+                      outputs.map((output) => (
+                        <Card key={output.id} style={{ marginBottom: "20px" }}>
+                          <List
+                            header={
+                              <Text strong>Test Case ID: {output.id}</Text>
+                            }
+                            dataSource={output.stdout}
+                            renderItem={(item, index) => (
+                              <List.Item>
+                                <Typography.Text strong>
+                                  Test Case {index + 1}:
+                                </Typography.Text>{" "}
+                                {item}
+                              </List.Item>
+                            )}
+                          />
+                        </Card>
+                      ))}
+                    {compileOutput && (
+                      <Card title="Compile Output">
+                        <Paragraph>{compileOutput}</Paragraph>
+                      </Card>
+                    )}
+                  </div>
                 </Col>
               </Row>
             </Card>

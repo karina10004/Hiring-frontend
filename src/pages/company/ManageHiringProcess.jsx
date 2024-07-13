@@ -13,8 +13,10 @@ import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 import Sidebar from "./companydashboard/Dashboard";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
+
 const { Header, Sider, Content } = Layout;
+
 const ManageHiringProcess = () => {
   const { id } = useParams();
   const [collapsed, setCollapsed] = useState(false);
@@ -183,7 +185,17 @@ const ManageHiringProcess = () => {
       dataIndex: "endTime",
       key: "endTime",
     },
+    {
+      title: "Action",
+      key: "action",
+      render: (text, record) => (
+        <Link to={`/manage/codinground/${record._id}`}>
+          <Button type="primary">Manage</Button>
+        </Link>
+      ),
+    },
   ];
+
   const interviewRoundColumns = [
     {
       title: "Start Date",
@@ -205,7 +217,17 @@ const ManageHiringProcess = () => {
       dataIndex: "type",
       key: "type",
     },
+    {
+      title: "Action",
+      key: "action",
+      render: (text, record) => (
+        <Link to={`/manage/interviewround/${id}/${record._id}`}>
+          <Button type="primary">Manage</Button>
+        </Link>
+      ),
+    },
   ];
+
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <Sider

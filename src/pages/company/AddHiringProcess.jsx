@@ -1,14 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Form, Input, DatePicker, Layout, Button, message } from "antd";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 import Sidebar from "./companydashboard/Dashboard";
 import { useNavigate } from "react-router-dom";
+import emailjs from "@emailjs/browser";
+// import
 import "./AddHiringProcess.css";
 
 const { Header, Sider, Content } = Layout;
-
 const HiringProcessForm = () => {
   const [collapsed, setCollapsed] = useState(false);
   const [formData, setFormData] = useState({
@@ -18,9 +19,7 @@ const HiringProcessForm = () => {
     startDate: null,
     endDate: null,
   });
-
   const navigate = useNavigate();
-
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevFormData) => ({
@@ -28,21 +27,18 @@ const HiringProcessForm = () => {
       [name]: value,
     }));
   };
-
   const handleDateChange = (name, date) => {
     setFormData((prevFormData) => ({
       ...prevFormData,
       [name]: date,
     }));
   };
-
   const handleSubmit = async () => {
     try {
       const access_token = localStorage.getItem("access_token");
       if (!access_token) {
         throw new Error("No access token found");
       }
-
       const decodedToken = jwtDecode(access_token);
       const companyId = decodedToken.id;
       console.log(formData);
@@ -63,6 +59,17 @@ const HiringProcessForm = () => {
 
       message.success("Hiring process created successfully!");
       console.log(response.data);
+      const link = `http://${window.location.host}/manage/${response.data.hiringProcess._id}`;
+      const registerLink = `http://${window.location.host}/register/${response.data.hiringProcess.registrationLink}`;
+      await emailjs.send("service_kdjbg5o", "template_d0qkf0h", {
+        subject: "Process created",
+        header: "Thank you for hiring on our platform",
+        message: `your process haas been successfully created, here is the link to access it 
+        ${link} , and here is the link to register for the process ${registerLink}`,
+        info: "null",
+        recipientEmail: "anshjain2255@gmail.com",
+      });
+
       navigate(`/manage/${response.data.hiringProcess._id}`);
 
       setFormData({
@@ -77,6 +84,10 @@ const HiringProcessForm = () => {
       message.error("Failed to create hiring process");
     }
   };
+
+  useEffect(() => {
+    emailjs.init("Oe0L9iQlLy0etAYWu");
+  }, []);
 
   return (
     <Layout style={{ minHeight: "100vh" }}>
@@ -178,7 +189,6 @@ const HiringProcessForm = () => {
                   onChange={(date) => handleDateChange("endDate", date)}
                 />
               </Form.Item>
-
               <Form.Item>
                 <Button
                   type="primary"
@@ -196,5 +206,4 @@ const HiringProcessForm = () => {
     </Layout>
   );
 };
-
 export default HiringProcessForm;

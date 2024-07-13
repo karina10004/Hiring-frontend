@@ -21,12 +21,10 @@ import {
 } from "@ant-design/icons";
 import Sidebar from "./companydashboard/Dashboard";
 import "./ManageCodingRound.css";
-
 const { Header, Sider, Content } = Layout;
 const { Title } = Typography;
 const { TextArea } = Input;
 const { Option } = Select;
-
 const ManageCodingRound = () => {
   const { id } = useParams();
   const [collapsed, setCollapsed] = useState(false);
@@ -37,7 +35,6 @@ const ManageCodingRound = () => {
     { input: "", expectedOutput: "", isHidden: false },
   ]);
   const [currentQuestionId, setCurrentQuestionId] = useState(null); // Track the current question being edited
-
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
@@ -50,17 +47,14 @@ const ManageCodingRound = () => {
         message.error("Failed to fetch questions");
       }
     };
-
     fetchQuestions();
   }, [id]);
-
   const showModal = () => {
     form.resetFields(); // Reset form fields when showing modal
     setTestCases([{ input: "", expectedOutput: "", isHidden: false }]);
     setIsModalVisible(true);
     setCurrentQuestionId(null); // Reset current question id
   };
-
   const handleModalOk = async () => {
     try {
       const values = await form.validateFields();
@@ -68,7 +62,6 @@ const ManageCodingRound = () => {
         ...values,
         testcases: testCases,
       };
-
       if (currentQuestionId) {
         // Update existing question
         const response = await axios.put(
@@ -103,7 +96,6 @@ const ManageCodingRound = () => {
         setQuestions([...questions, response.data]);
         message.success("Question added successfully!");
       }
-
       form.resetFields();
       setTestCases([{ input: "", expectedOutput: "", isHidden: false }]);
       setIsModalVisible(false);
@@ -112,32 +104,27 @@ const ManageCodingRound = () => {
       message.error("Failed to add/update question");
     }
   };
-
   const handleModalCancel = () => {
     setIsModalVisible(false);
     form.resetFields();
     setTestCases([{ input: "", expectedOutput: "", isHidden: false }]);
     setCurrentQuestionId(null);
   };
-
   const handleAddTestCase = () => {
     setTestCases([
       ...testCases,
       { input: "", expectedOutput: "", isHidden: false },
     ]);
   };
-
   const handleRemoveTestCase = (index) => {
     const newTestCases = testCases.filter((_, i) => i !== index);
     setTestCases(newTestCases);
   };
-
   const handleTestCaseChange = (index, field, value) => {
     const newTestCases = [...testCases];
     newTestCases[index][field] = value;
     setTestCases(newTestCases);
   };
-
   const handleEditQuestion = (questionId) => {
     const questionToEdit = questions.find((q) => q._id === questionId);
     if (questionToEdit) {
@@ -155,7 +142,6 @@ const ManageCodingRound = () => {
       setIsModalVisible(true);
     }
   };
-
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <Sider
@@ -299,7 +285,7 @@ const ManageCodingRound = () => {
                   mode="multiple"
                   placeholder="Select programming languages"
                 >
-                  <Option value="c++">C++</Option>
+                  <Option value="cpp">C++</Option>
                   <Option value="java">Java</Option>
                   <Option value="python">Python</Option>
                 </Select>
@@ -390,5 +376,4 @@ const ManageCodingRound = () => {
     </Layout>
   );
 };
-
 export default ManageCodingRound;
