@@ -1,0 +1,167 @@
+/* General page style */
+/* General page style */
+/* Layout and background style */
+body {
+    font-family: "Roboto", sans-serif;
+  }
+  
+  /* .site-layout-background {
+    background: linear-gradient(135deg, #f0f2f5, #ffffff);
+    color: white;
+    padding: 20px;
+    box-sizing: border-box;
+    
+  } */
+  
+  /* .header {
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #001529;
+    color: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  } */
+  
+  .trigger-btn {
+    font-size: 18px;
+    padding: 0 16px;
+    color: white;
+  }
+  .rounds-section {
+    margin-bottom: 24px;
+    padding: 24px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* .rounds-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+  } */
+  
+  /* .ant-table {
+    margin-bottom: 24px;
+  } */
+  /* .ant-card {
+    height: fit-content;
+  } */
+  /* .ant-table-pagination {
+    margin: 16px 0;
+  } */
+  /* .ant-modal-title {
+    font-size: 20px;
+    font-weight: bold;
+  } */
+  .button {
+    background-color: #1890ff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  .button:hover {
+    background-color: #40a9ff;
+  }
+  /* Modal form styles */
+  /* .ant-modal-body {
+    padding: 20px;
+  }
+  .ant-form-item {
+    margin-bottom: 16px;
+  }
+  .ant-input,
+  .ant-picker,
+  .ant-select-selector {
+    border-radius: 5px;
+  }
+  .ant-btn-primary {
+    background-color: #1890ff;
+    border-color: #1890ff;
+  }
+  .ant-btn-primary:hover,
+  .ant-btn-primary:focus {
+    background-color: #40a9ff;
+    border-color: #40a9ff;
+  } */
+  /* Card container style */
+  .form-container {
+    max-width: 900px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    box-sizing: border-box;
+  }
+  /* Form content layout */
+  .form-content {
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+    box-sizing: border-box;
+  }
+  /* Left side of the form */
+  .form-left {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-right: 30px;
+    border-right: 2px solid #f0f0f0;
+    box-sizing: border-box;
+  }
+  /* Form title */
+  .title {
+    font-size: 32px;
+    font-weight: bold;
+    color: #1890ff;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  /* Button style */
+  .btn {
+    width: 100%;
+    margin-top: 15px;
+    height: 50px;
+    font-size: 16px;
+  }
+  .btn.secondary {
+    background-color: #f0f2f5;
+    border-color: #d9d9d9;
+  }
+  /* Image style */
+  .auth-image {
+    max-width: 100%;
+    border-radius: 15px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  }
+  /* Right side of the form */
+  .form-right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    padding-left: 30px;
+    box-sizing: border-box;
+  }
+  /* Responsive design */
+  @media (max-width: 768px) {
+    .form-content {
+      flex-direction: column;
+    }
+    .form-left {
+      padding-right: 0;
+      border-right: none;
+    }
+    .form-right {
+      padding-left: 0;
+    }
+  }

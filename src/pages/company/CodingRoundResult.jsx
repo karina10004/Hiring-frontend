@@ -4,11 +4,9 @@ import axios from "axios";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import Sidebar from "./companydashboard/Dashboard";
 import { useParams } from "react-router-dom";
-
 const { Header, Sider, Content } = Layout;
 const { Title } = Typography;
 const { Option } = Select;
-
 const CodingRoundScores = () => {
   const { roundId, hiringId } = useParams();
   const [collapsed, setCollapsed] = useState(false);
@@ -17,7 +15,6 @@ const CodingRoundScores = () => {
   const [submissions, setSubmissions] = useState([]);
   const [loading, setLoading] = useState(false);
   const [results, setResults] = useState({});
-
   const fetchData = async () => {
     try {
       const registrationResponse = await axios.get(
@@ -25,12 +22,10 @@ const CodingRoundScores = () => {
       );
       setRegistrations(registrationResponse.data.listRegistrations);
       setCandidates(registrationResponse.data.candidates);
-
       const questionResponse = await axios.get(
         `http://localhost:8000/api/codinground/get/${hiringId}/${roundId}`
       );
       const questions = questionResponse.data.questions;
-
       const submissions = await Promise.all(
         questions.map(async (questionId) => {
           const submissionResponse = await axios.get(
@@ -39,18 +34,15 @@ const CodingRoundScores = () => {
           return submissionResponse.data;
         })
       );
-
       setSubmissions(submissions.flat());
     } catch (error) {
       console.error("Failed to fetch data:", error);
       message.error("Failed to fetch data");
     }
   };
-
   useEffect(() => {
     fetchData();
   }, [roundId, hiringId]);
-
   const calculateScores = () => {
     const candidateScores = registrations
       .filter((registration) => registration.status === "registered")
@@ -59,7 +51,12 @@ const CodingRoundScores = () => {
         const candidate = candidates.find((c) => c._id === candidateId);
         const totalScore = submissions
           .filter((submission) => submission.userId === candidateId)
-          .reduce((acc, submission) => acc + submission.score, 0);
+          .reduce((acc, submission) => {
+            console.log(
+              `Adding score ${submission.score} for candidate ${candidateId}`
+            );
+            return acc + submission.score;
+          }, 0);
 
         return {
           key: candidateId,
@@ -69,11 +66,11 @@ const CodingRoundScores = () => {
           totalScore,
         };
       });
-
     return candidateScores;
   };
 
   let scores = calculateScores();
+  console.log("Calculated Scores:", scores);
 
   const handleResultChange = (candidateId, result) => {
     setResults((prevResults) => ({
@@ -81,7 +78,6 @@ const CodingRoundScores = () => {
       [candidateId]: result,
     }));
   };
-
   const handleSaveResults = async () => {
     setLoading(true);
     try {
@@ -113,7 +109,6 @@ const CodingRoundScores = () => {
       setLoading(false);
     }
   };
-
   const columns = [
     {
       title: "Name",
@@ -145,7 +140,6 @@ const CodingRoundScores = () => {
       ),
     },
   ];
-
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <Sider
@@ -189,5 +183,4 @@ const CodingRoundScores = () => {
     </Layout>
   );
 };
-
 export default CodingRoundScores;

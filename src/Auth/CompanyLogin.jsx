@@ -29,9 +29,7 @@ const CompanyLogin = () => {
           },
         }
       );
-
       localStorage.setItem("access_token", response.data.access_token);
-
       navigate("/dashboard");
     } catch (error) {
       console.error("Login error:", error);
@@ -44,9 +42,6 @@ const CompanyLogin = () => {
           <Typography.Title level={3} strong className="title">
             Company Login
           </Typography.Title>
-          <Typography.Text type="secondary" strong className="slogan">
-            Join for exclusive access
-          </Typography.Text>
           <Form layout="vertical" autoComplete="off">
             <Form.Item
               label="Username"

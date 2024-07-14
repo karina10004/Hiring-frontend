@@ -6,9 +6,7 @@ import { jwtDecode } from "jwt-decode";
 import Sidebar from "./companydashboard/Dashboard";
 import { useNavigate } from "react-router-dom";
 import emailjs from "@emailjs/browser";
-// import
 import "./AddHiringProcess.css";
-
 const { Header, Sider, Content } = Layout;
 const HiringProcessForm = () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -56,7 +54,6 @@ const HiringProcessForm = () => {
           },
         }
       );
-
       message.success("Hiring process created successfully!");
       console.log(response.data);
       const link = `http://${window.location.host}/manage/${response.data.hiringProcess._id}`;
@@ -67,11 +64,10 @@ const HiringProcessForm = () => {
         message: `your process haas been successfully created, here is the link to access it 
         ${link} , and here is the link to register for the process ${registerLink}`,
         info: "null",
-        recipientEmail: "anshjain2255@gmail.com",
+        recipientEmail: "karina.rajawat1101@gmail.com",
       });
 
       navigate(`/manage/${response.data.hiringProcess._id}`);
-
       setFormData({
         title: "",
         desc: "",
@@ -84,11 +80,9 @@ const HiringProcessForm = () => {
       message.error("Failed to create hiring process");
     }
   };
-
   useEffect(() => {
     emailjs.init("Oe0L9iQlLy0etAYWu");
   }, []);
-
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <Sider
@@ -100,109 +94,123 @@ const HiringProcessForm = () => {
         <div className="logo" />
         <Sidebar />
       </Sider>
-      <Layout className="site-layout">
-        <Header className="site-layout-background" style={{ padding: 0 }}>
-          <Button
-            type="text"
-            icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-            onClick={() => setCollapsed(!collapsed)}
-            className="trigger-btn"
-          />
-        </Header>
-        <Content style={{ margin: "0 16px" }}>
-          <div className="">
-            <Form
-              layout="vertical"
-              name="hiringProcessForm"
-              onFinish={handleSubmit}
-              autoComplete="off"
-              style={{ maxWidth: 600, margin: "0 auto" }}
-              className="form1"
-            >
-              <Form.Item
-                label="Job Title"
-                name="title"
-                rules={[
-                  { required: true, message: "Please enter the job title" },
-                ]}
+      <div className="container" style={{ backgroundColor: "white" }}>
+        <Layout className="site-layout">
+          <Header className="header" style={{ padding: 0 }}>
+            <Button
+              type="text"
+              icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+              onClick={() => setCollapsed(!collapsed)}
+              className="trigger-btn"
+            />
+          </Header>
+          <Content style={{ margin: "0 16px" }}>
+            <div className="dist">
+              <div
+                style={{
+                  backgroundColor: "white",
+                  border: "1px solid black",
+                  padding: "16px",
+                }}
               >
-                <Input
-                  name="title"
-                  value={formData.title}
-                  onChange={handleInputChange}
-                />
-              </Form.Item>
-              <Form.Item
-                label="Description"
-                name="desc"
-                rules={[
-                  { required: true, message: "Please enter a job description" },
-                ]}
-              >
-                <Input.TextArea
-                  rows={4}
-                  name="desc"
-                  value={formData.desc}
-                  onChange={handleInputChange}
-                />
-              </Form.Item>
-              <Form.Item
-                label="Number of Rounds"
-                name="numRounds"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please enter the number of rounds",
-                  },
-                ]}
-              >
-                <Input
-                  type="number"
-                  name="numRounds"
-                  value={formData.numRounds}
-                  onChange={handleInputChange}
-                />
-              </Form.Item>
-              <Form.Item
-                label="Start Date"
-                name="startDate"
-                rules={[
-                  { required: true, message: "Please select a start date" },
-                ]}
-              >
-                <DatePicker
-                  name="startDate"
-                  value={formData.startDate}
-                  onChange={(date) => handleDateChange("startDate", date)}
-                />
-              </Form.Item>
-              <Form.Item
-                label="End Date"
-                name="endDate"
-                rules={[
-                  { required: true, message: "Please select an end date" },
-                ]}
-              >
-                <DatePicker
-                  name="endDate"
-                  value={formData.endDate}
-                  onChange={(date) => handleDateChange("endDate", date)}
-                />
-              </Form.Item>
-              <Form.Item>
-                <Button
-                  type="primary"
-                  htmlType="submit"
-                  size="large"
-                  className="btn"
+                <Form
+                  layout="vertical"
+                  name="hiringProcessForm"
+                  onFinish={handleSubmit}
+                  autoComplete="off"
+                  style={{ maxWidth: 600, margin: "0 auto" }}
+                  className="form1"
                 >
-                  Create Hiring Process
-                </Button>
-              </Form.Item>
-            </Form>
-          </div>
-        </Content>
-      </Layout>
+                  <Form.Item
+                    label="Job Title"
+                    name="title"
+                    rules={[
+                      { required: true, message: "Please enter the job title" },
+                    ]}
+                  >
+                    <Input
+                      name="title"
+                      value={formData.title}
+                      onChange={handleInputChange}
+                    />
+                  </Form.Item>
+                  <Form.Item
+                    label="Description"
+                    name="desc"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please enter a job description",
+                      },
+                    ]}
+                  >
+                    <Input.TextArea
+                      rows={4}
+                      name="desc"
+                      value={formData.desc}
+                      onChange={handleInputChange}
+                    />
+                  </Form.Item>
+                  <Form.Item
+                    label="Number of Rounds"
+                    name="numRounds"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please enter the number of rounds",
+                      },
+                    ]}
+                  >
+                    <Input
+                      type="number"
+                      name="numRounds"
+                      value={formData.numRounds}
+                      onChange={handleInputChange}
+                    />
+                  </Form.Item>
+                  <Form.Item
+                    label="Start Date"
+                    name="startDate"
+                    rules={[
+                      { required: true, message: "Please select a start date" },
+                    ]}
+                  >
+                    <DatePicker
+                      name="startDate"
+                      value={formData.startDate}
+                      onChange={(date) => handleDateChange("startDate", date)}
+                    />
+                  </Form.Item>
+                  <Form.Item
+                    label="End Date"
+                    name="endDate"
+                    rules={[
+                      { required: true, message: "Please select an end date" },
+                    ]}
+                  >
+                    <DatePicker
+                      name="endDate"
+                      value={formData.endDate}
+                      onChange={(date) => handleDateChange("endDate", date)}
+                    />
+                  </Form.Item>
+
+                  <Form.Item>
+                    <Button
+                      type="primary"
+                      htmlType="submit"
+                      size="large"
+                      className="btn"
+                    >
+                      Create Hiring Process
+                    </Button>
+                  </Form.Item>
+                </Form>
+              </div>
+            </div>
+          </Content>
+        </Layout>
+      </div>
     </Layout>
   );
 };

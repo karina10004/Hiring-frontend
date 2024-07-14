@@ -3,7 +3,8 @@ import { Card, Flex, Typography, Form, Input, Button, message } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import registerImage from "../assets/register.png";
-import "./Auth.css";
+import "./Register.css";
+
 const Register = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -169,5 +170,4 @@ const Register = () => {
     </div>
   );
 };
-
 export default Register;

@@ -31,7 +31,7 @@ const recentActivities = [
 const HomePage = () => (
   <div style={{ padding: 24, background: "#f0f2f5", minHeight: 360 }}>
     <Title level={2} style={{ marginBottom: 24 }}>
-      Welcome to the Company Dashboard!
+      Welcome to the Dashboard!
     </Title>
     <Row gutter={16}>
       <Col span={12}>
@@ -82,5 +82,4 @@ const HomePage = () => (
     </Row>
   </div>
 );
-
 export default HomePage;

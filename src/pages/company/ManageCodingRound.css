@@ -1,3 +1,65 @@
 .test-case-item {
-    margin-bottom: 16px;
-  }
+  margin-bottom: 16px;
+}
+/* General Layout Styling */
+.custom-layout {
+  min-height: 100vh;
+}
+
+.custom-sider {
+  background: #fff;
+}
+
+.custom-site-layout {
+  background-color: #f0f2f5;
+}
+
+/* .custom-header {
+  background-color: #001529;
+  color: #fff;
+  padding: 0;
+} */
+
+.custom-icon {
+  color: #fff;
+}
+
+.trigger-btn {
+  margin-left: 16px;
+  color: #fff;
+}
+
+/* Content Styling */
+.custom-content {
+  margin: 16px;
+  background-color: #f0f2f5;
+}
+
+.custom-container {
+  background-color: white;
+  padding: 24px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.custom-add-button {
+  margin-bottom: 16px;
+}
+
+.custom-list-item {
+  margin-bottom: 16px;
+}
+
+.custom-card {
+  border-radius: 8px;
+  border-color: #f0f0f0;
+}
+
+.custom-test-case {
+  margin-bottom: 8px;
+}
+
+/* Modal Styling */
+.custom-test-case-item {
+  margin-bottom: 16px;
+}

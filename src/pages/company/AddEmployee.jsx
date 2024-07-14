@@ -5,7 +5,6 @@ import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import { jwtDecode } from "jwt-decode";
 import Sidebar from "./companydashboard/Dashboard";
 import "./AddEmployee.css";
-
 const { Header, Sider, Content } = Layout;
 const AddEmployee = () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -48,43 +47,38 @@ const AddEmployee = () => {
       message.error("Add Employee Failed");
     }
   };
+
   return (
-    <Layout style={{ minHeight: "100vh" }}>
+    <Layout className="layout-container">
       <Sider
         collapsible
         collapsed={collapsed}
         onCollapse={setCollapsed}
         theme="light"
+        className="sider"
       >
         <div className="logo" />
         <Sidebar />
       </Sider>
-      <Layout className="site-layout">
-        <Header className="site-layout-background" style={{ padding: 0 }}>
-          <Button
-            type="text"
-            icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-            onClick={() => setCollapsed(!collapsed)}
-            className="trigger-btn"
-          />
-        </Header>
-        <Content style={{ margin: "0 16px" }}>
-          <Card className="form-container">
-            <div className="flex-container">
-              <div className="flex-vertical">
-                <Typography.Title level={3} strong className="title">
+      <Layout className="content-layout">
+        <Content className="content">
+          <Card className="card-container">
+            <div className="form-container">
+              <div className="form-content">
+                <Typography.Title level={3} className="form-title">
                   Add Employee
                 </Typography.Title>
-                <Form layout="vertical">
+                <Form layout="vertical" className="form">
                   <Form.Item
                     label="Employee Name"
                     name="name"
                     rules={[
                       {
                         required: true,
-                        message: "please input the name of Employee",
+                        message: "Please input the name of the employee",
                       },
                     ]}
+                    className="form-item"
                   >
                     <Input
                       size="large"
@@ -92,17 +86,20 @@ const AddEmployee = () => {
                       name="name"
                       value={formData.name}
                       onChange={handleInputChange}
+                      className="input"
                     />
                   </Form.Item>
+
                   <Form.Item
                     label="Position"
                     name="position"
                     rules={[
                       {
                         required: true,
-                        message: "please input position",
+                        message: "Please input position",
                       },
                     ]}
+                    className="form-item"
                   >
                     <Input
                       size="large"
@@ -110,6 +107,7 @@ const AddEmployee = () => {
                       name="position"
                       value={formData.position}
                       onChange={handleInputChange}
+                      className="input"
                     />
                   </Form.Item>
                   <Form.Item
@@ -118,9 +116,10 @@ const AddEmployee = () => {
                     rules={[
                       {
                         required: true,
-                        message: "please enter email",
+                        message: "Please enter email",
                       },
                     ]}
+                    className="form-item"
                   >
                     <Input
                       size="large"
@@ -128,14 +127,28 @@ const AddEmployee = () => {
                       name="email"
                       value={formData.email}
                       onChange={handleInputChange}
+                      className="input"
                     />
                   </Form.Item>
-                  <Form.Item>
+                  <Form.Item
+                    label="Password"
+                    name="password"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please input your password!",
+                      },
+                    ]}
+                    className="form-item"
+                  >
+                    <Input.Password placeholder="Password" className="input" />
+                  </Form.Item>
+                  <Form.Item className="form-item">
                     <Button
                       type="primary"
                       htmlType="submit"
                       size="large"
-                      className="btn"
+                      className="submit-btn"
                       onClick={handleAdd}
                     >
                       Add Employee

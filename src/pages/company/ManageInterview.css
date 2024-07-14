@@ -1,0 +1,48 @@
+.custom-layout {
+    background: #f0f2f5;
+  }
+
+  .custom-header {
+    background: #fff;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .custom-logo {
+    height: 32px;
+    margin: 16px;
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  .custom-trigger-btn {
+    font-size: 18px;
+    padding: 0 24px;
+  }
+
+  .custom-content {
+    margin: 24px 16px;
+    padding: 24px;
+    background: #fff;
+    min-height: 280px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .custom-heading {
+    color: #1a1a1a;
+    font-weight: 500;
+    margin-bottom: 16px;
+  }
+
+  .custom-table-wrapper {
+    margin-top: 24px;
+  }
+
+  .custom-primary-button {
+    margin-top: 16px;
+    background-color: #1890ff;
+    border-color: #1890ff;
+    color: white;
+  }

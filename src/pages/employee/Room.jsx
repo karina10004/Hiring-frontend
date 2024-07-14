@@ -4,9 +4,7 @@ import { useSocket } from "../../context/SocketProvider";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { List, Button, Card, Typography } from "antd";
-
 const { Title } = Typography;
-
 const Room = () => {
   const { interviewId, processId } = useParams();
   const interviewerId = jwtDecode(localStorage.getItem("access_token")).id;
@@ -17,29 +15,24 @@ const Room = () => {
   const [candidates, setCandidates] = useState([]);
   const [candidateStatus, setCandidateStatus] = useState({});
   const [callingCandidateId, setCallingCandidateId] = useState(null);
-
   const handleInterviewerRoomJoined = useCallback(({ id }) => {
     setId(id);
   }, []);
-
   const handleCandidateJoinedRoom = useCallback(({ candidateId }) => {
     setCandidateStatus((prevStatus) => ({
       ...prevStatus,
       [candidateId]: true,
     }));
   }, []);
-
   const handleCandidateLeftRoom = useCallback(({ candidateId }) => {
     setCandidateStatus((prevStatus) => ({
       ...prevStatus,
       [candidateId]: false,
     }));
   }, []);
-
   const getCandidateInfo = (candidateId) => {
     return candidates.find((candidate) => candidate._id === candidateId);
   };
-
   const getRegistrationData = async () => {
     const response = await axios.get(
       `http://localhost:8000/api/register/get/${processId}`
@@ -55,7 +48,6 @@ const Room = () => {
     setRegistrations(filteredCandidates);
     setCandidates(data.candidates);
   };
-
   const callCandidate = (candidateId) => {
     setCallingCandidateId(candidateId);
     socket.emit("call:candidate", {
@@ -64,7 +56,6 @@ const Room = () => {
       remotePeerId: id,
     });
   };
-
   const handleCallAccepted = useCallback(
     async ({ candidateSocketId, interviewerSocketId }) => {
       localStorage.setItem("peerId", interviewerSocketId);
@@ -73,7 +64,6 @@ const Room = () => {
     },
     []
   );
-
   useEffect(() => {
     socket.emit("interviewer:join:room", { interviewId });
     socket.on("interviewer:room:joined", handleInterviewerRoomJoined);
@@ -98,11 +88,15 @@ const Room = () => {
   ]);
 
   return (
-    <div style={{ padding: "20px" }}>
-      <Card>
-        <Title level={2}>Interview Room</Title>
+    <div className="container">
+      <Card className="custom-card">
+        <Title level={2} className="custom-title">
+          Interview Room
+        </Title>
         <div>
-          <Title level={4}>Candidate List</Title>
+          <Title level={4} className="custom-title">
+            Candidate List
+          </Title>
           <List
             itemLayout="horizontal"
             dataSource={registrations}
@@ -111,10 +105,12 @@ const Room = () => {
               const isJoined = candidateStatus[registration.candidateId];
               return (
                 <List.Item
+                  className="custom-list-item"
                   actions={[
                     candidate && (
                       <Button
                         type="primary"
+                        className="custom-button"
                         disabled={
                           !isJoined ||
                           callingCandidateId === registration.candidateId
@@ -130,11 +126,17 @@ const Room = () => {
                 >
                   <List.Item.Meta
                     title={
-                      candidate
-                        ? candidate.name
-                        : "Candidate information not available"
+                      <span className="custom-meta-title">
+                        {candidate
+                          ? candidate.name
+                          : "Candidate information not available"}
+                      </span>
                     }
-                    description={candidate ? candidate.email : ""}
+                    description={
+                      <span className="custom-meta-description">
+                        {candidate ? candidate.email : ""}
+                      </span>
+                    }
                   />
                 </List.Item>
               );
@@ -145,5 +147,4 @@ const Room = () => {
     </div>
   );
 };
-
 export default Room;

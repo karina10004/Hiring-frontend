@@ -1,38 +1,39 @@
 * {
-    margin: 0;
-    padding: 0;
-    font-family: 'Poppins', sans-serif;
-  }
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; /* Include padding and border in element's total width and height */
+  font-family: "Poppins", sans-serif;
+}
+/* Logo style */
+.logo {
+  height: 32px;
+  margin: 16px;
+  background: rgba(255, 255, 255, 0.2);
+}
+/* Trigger button style */
+.trigger-btn {
+  font-size: 16px;
+  width: 50px;
+  height: 50px;
+  border: none;
+  outline: none;
+  background: transparent; /* Ensure the button has a transparent background */
+  color: #1890ff; /* Default color for the button */
+  cursor: pointer; /* Change cursor to pointer on hover */
+  transition: color 0.3s ease, transform 0.3s ease; /* Smooth transition for color and transform */
+}
+.trigger-btn:hover {
+  color: #40a9ff; /* Change color on hover */
+}
 
-  .logo {
-    height: 32px;
-    margin: 16px;
-    background: rgba(255, 255, 255, 0.2);
-  }
+/* Selected menu item */
+.ant-menu-item-selected {
+  background-color: hsl(209, 88%, 41%) !important; /* Selected background color */
+  color: #fff !important; 
+}
 
-  .site-layout .site-layout-background {
-    background: #fff;
-  }
-
-  .trigger-btn {
-    font-size: 16px;
-    width: 50px;
-    height: 50px;
-    border: none; /* Remove default border */
-    outline: none; /* Remove default outline */
-  }
-
-  .trigger-btn:focus {
-    outline: none; /* Remove outline when focused */
-    box-shadow: none; /* Remove box shadow when focused */
-  }
-
-  .ant-menu-item-selected {
-    background-color: #4f6f52 !important;
-    color: #fff !important;
-  }
-
-  .ant-menu-item:hover {
-    color: #4f6f52 !important;
-    border-color: #4f6f52 !important;
-  }
+/* Hover effect for menu items */
+.ant-menu-item:hover {
+  color:  hsl(209, 88%, 41%); /* Hover text color */
+  background-color: #f0f0f0; /* Hover background color */
+}

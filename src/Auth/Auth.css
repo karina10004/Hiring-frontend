@@ -1,37 +1,58 @@
 .form-container {
+  max-width: 900px;
+  margin: 50px auto;
+  padding: 40px;
+  border-radius: 15px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+}
+
+.form-content {
+  display: flex;
+  gap: 30px;
+}
+
+.form-left {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-right: 30px;
+  border-right: 2px solid #f0f0f0;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: bold;
+  color: #1890ff;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.slogan {
+  font-size: 18px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.btn {
+  width: 100%;
+  margin-top: 15px;
+  height: 50px;
+  font-size: 16px;
+  color: black;
+}
+
+.auth-image {
+  max-width: 100%;
+  border-radius: 15px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+
+.form-right {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100vh;
-
-}
-.style{
-  margin: auto;
-}
-.ant-form-item {
-    margin-bottom: 12px; 
-    background: white;
-  }
-   
-.form-container {
-    max-width: 1000px; 
-    margin: 0 auto; 
-    max-height: 900px;
-    padding: 20px; 
-    background: white;
-  }
-/* .form-container{
-  width: 1000px;
-} */
-.title, .slogan{
-  text-align: center;
-}
-.btn {
-  width: 100%;
-  text-align: center;
-  background-color: #cbdbff;
-}
-.auth-image {
-  width: 100%;
-  border-radius: 8px;
+  flex: 1;
+  padding-left: 30px;
 }

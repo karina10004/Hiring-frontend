@@ -23,7 +23,7 @@ import Interview from "./pages/employee/Interview";
 import CandidateInterview from "./pages/candidate/CandidateInterview";
 import CodingRoundScores from "./pages/company/CodingRoundResult";
 import Room from "./pages/employee/Room";
-
+import Home from "./pages/company/companydashboard/Home";
 const App = () => {
   return (
     <Router>
@@ -36,6 +36,7 @@ const App = () => {
           element={<CandidateHome />}
         />
         <Route path="/companylogin" element={<CompanyLogin />} />
+        <Route path="/candidate" element={<Home />} />
         <Route path="/companyregister" element={<CompanyRegister />} />
         <Route path="/hiring" element={<AddHiring />} />
         <Route path="/employee" element={<AddEmployee />} />
