@@ -4,7 +4,6 @@ import { ClockCircleOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
-import "./Home.css";
 
 const CandidateHome = () => {
   const [hiringProcess, setHiringProcess] = useState(null);
